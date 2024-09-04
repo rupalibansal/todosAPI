@@ -1,8 +1,14 @@
+body, html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+  height: 100%;
+  width: 100%;
 }
 
 .logo {
@@ -37,6 +43,18 @@
   padding: 2em;
 }
 
-.read-the-docs {
-  color: #888;
+.background {
+  background-image: url('../public/background.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  backdrop-filter: blur(3px);
 }
+
+
