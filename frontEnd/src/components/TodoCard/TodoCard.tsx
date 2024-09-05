@@ -11,7 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 
 interface TodoCardProps {
-  todo: { id: number; name: string };
+  todo: { id: number; name: string; category: { id: number; name: string } };
   onDelete: (id: number) => Promise<unknown>;
   onDuplicate: (id: number) => Promise<void>;
 }
@@ -36,9 +36,18 @@ const TodoCard: React.FC<TodoCardProps> = ({ todo, onDelete, onDuplicate }) => {
     >
       <CardContent>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Box display="flex" alignItems="center">
+          <Box display="flex" alignItems="center" flexGrow={1}>
             <Typography variant="h6" component="h2">
               {todo.name}
+            </Typography>
+          </Box>
+          <Box display="flex" alignItems="center">
+            <Typography
+              variant="subtitle2"
+              component="h2"
+              sx={{ marginLeft: 1 }}
+            >
+              {todo.category.name}
             </Typography>
           </Box>
           <Box>
