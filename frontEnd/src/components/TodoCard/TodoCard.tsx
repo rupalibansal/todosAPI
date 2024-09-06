@@ -1,28 +1,32 @@
 import React from "react";
-import {
-  Card,
-  CardContent,
-  Typography,
-  IconButton,
-  Box,
-  Checkbox,
-} from "@mui/material";
+import { Card, CardContent, Typography, IconButton, Box } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
+import EditIcon from "@mui/icons-material/Edit";
 
 interface TodoCardProps {
   todo: { id: number; name: string; category: { id: number; name: string } };
   onDelete: (id: number) => Promise<unknown>;
   onDuplicate: (id: number) => Promise<void>;
+  onEdit: (id: number) => Promise<void>;
 }
 
-const TodoCard: React.FC<TodoCardProps> = ({ todo, onDelete, onDuplicate }) => {
+const TodoCard: React.FC<TodoCardProps> = ({
+  todo,
+  onDelete,
+  onDuplicate,
+  onEdit,
+}) => {
   const handleDelete = async () => {
     await onDelete(todo.id);
   };
 
   const handleDuplicate = async () => {
     await onDuplicate(todo.id);
+  };
+
+  const handleEdit = async () => {
+    await onEdit(todo.id);
   };
 
   return (
@@ -66,6 +70,9 @@ const TodoCard: React.FC<TodoCardProps> = ({ todo, onDelete, onDuplicate }) => {
               sx={{ color: "#e6842e" }} // Light blue color
             >
               <FileCopyIcon />
+            </IconButton>
+            <IconButton edge="end" aria-label="edit">
+              <EditIcon onClick={handleEdit} />
             </IconButton>
           </Box>
         </Box>

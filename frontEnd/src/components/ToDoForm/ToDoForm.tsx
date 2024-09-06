@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 
 interface ToDoFormProps {
+  initialValues?: { todoName: string; categoryId: number };
   onSubmit: ({
     name,
     categoryId,
@@ -21,9 +22,11 @@ interface ToDoFormProps {
   }) => Promise<void>;
 }
 
-export const ToDoForm = ({ onSubmit }: ToDoFormProps) => {
-  const [name, setName] = useState("");
-  const [categoryId, setCategoryId] = useState<number>(0);
+export const ToDoForm = ({ initialValues, onSubmit }: ToDoFormProps) => {
+  const [name, setName] = useState(initialValues?.todoName || "");
+  const [categoryId, setCategoryId] = useState<number>(
+    initialValues?.categoryId || 1
+  );
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {

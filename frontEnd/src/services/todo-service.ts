@@ -22,7 +22,10 @@ export interface ToDoPayload {
 
 const getAllTodos = async () => {
   const response = await fetch(`${baseURL}/todos`);
-  return response.json() as Promise<TodoItem[]>;
+  if (!response.ok) {
+    throw new Error("Failed to fetch");
+  }
+  return (await response.json()) as TodoItem[];
 };
 
 const createTodo = async (todo: ToDoPayload) => {
@@ -33,18 +36,24 @@ const createTodo = async (todo: ToDoPayload) => {
     },
     body: JSON.stringify(todo),
   });
-  return response.json() as Promise<TodoItem>;
+  if (!response.ok) {
+    throw new Error("Failed to create a todo");
+  }
+  return (await response.json()) as TodoItem;
 };
 
-const updateTodo = async (id: number, todo: TodoItem) => {
-  const response = await fetch(`${baseURL}/todos/${todo.id}`, {
+const updateTodo = async (id: number, todo: ToDoPayload) => {
+  const response = await fetch(`${baseURL}/todos/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(todo),
   });
-  return response.json() as Promise<TodoItem>;
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+  return (await response.json()) as TodoItem;
 };
 
 const deleteTodo = async (id: number) => {
@@ -60,7 +69,19 @@ const deleteTodo = async (id: number) => {
 
 const getTodoByCategory = async (category: string) => {
   const response = await fetch(`${baseURL}/todos?category=${category}`);
-  return response.json() as Promise<TodoItem[]>;
+  if (!response.ok) {
+    throw new Error("Failed to get todos by category");
+  }
+  return (await response.json()) as TodoItem[];
+};
+
+export const getTodoById = async (id: number) => {
+  const response = await fetch(baseURL + "/todos/" + id);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch");
+  }
+  return (await response.json()) as TodoItem;
 };
 
 export { getAllTodos, createTodo, updateTodo, deleteTodo, getTodoByCategory };

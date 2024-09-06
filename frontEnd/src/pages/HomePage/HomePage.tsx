@@ -25,6 +25,10 @@ export const HomePage = () => {
   };
 
   const handleDelete = async (id: number) => {
+    const confirmed = confirm("Are you sure?");
+    if (!confirmed) {
+      return;
+    }
     const isDeleted = await deleteTodo(id).catch((e) => {
       console.log(e);
       return false;
@@ -50,17 +54,26 @@ export const HomePage = () => {
       setTodos([newTodo, ...todos]);
     }
   };
+
+  const handleEdit = async (id: number) => {
+    navigate("/todo/edit/" + id);
+  };
+
   return (
     <div className="container">
       <h1 className="highlighted-heading">Welcome to todos app!</h1>
       <button className="create-todo-button" onClick={handleCreateTodo}>
         Create Todo
       </button>
+      <button className="create-todo-button" onClick={handleCreateTodo}>
+        Create Category
+      </button>
       <div className="todo-container">
         <Todo
           todos={todos}
           onDelete={handleDelete}
           onDuplicate={handleDuplicate}
+          onEdit={handleEdit}
         />
       </div>
     </div>
