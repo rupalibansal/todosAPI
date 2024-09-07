@@ -51,15 +51,6 @@ jobs:
           chmod 400 key.pem
           scp -o StrictHostKeyChecking=no -i key.pem docker-compose.yml ${EC2_USER}@${EC2_HOST}:/home/${EC2_USER}/
 
-      - name: Copy docker-compose.yml to EC2
-        run: |
-          scp -o StrictHostKeyChecking=no -i key.pem docker-compose.yml ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/
-        shell: /usr/bin/bash -e {0}
-        env:
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-          EC2_USER: ${{ secrets.EC2_USER }}
-          EC2_KEY: ${{ secrets.EC2_KEY }}
-
       - name: Deploy on EC2
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
@@ -69,10 +60,18 @@ jobs:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
-          ssh -o StrictHostKeyChecking=no -i key.pem ${EC2_USER}@${EC2_HOST} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            # Install Docker Compose if not already installed
+            if ! command -v docker-compose &> /dev/null
+            then
+                sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+                sudo chmod +x /usr/local/bin/docker-compose
+            fi
+
             export DB_URL=${DB_URL}
             export DB_USERNAME=${DB_USERNAME}
             export DB_PASSWORD=${DB_PASSWORD}
             docker-compose down
             docker-compose up -d
           EOF
+        shell: /usr/bin/bash -e {0}
