@@ -1,4 +1,4 @@
-const baseURL = import.meta.env.VITE_APP_API_BASE_URL;
+const baseURL = 'http://backend:8080';
 
 interface todo {
   id: number;
