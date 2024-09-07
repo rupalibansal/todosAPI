@@ -35,8 +35,8 @@ export const EditToDoPage = () => {
         <ToDoForm
           onSubmit={handleOnSubmit}
           initialValues={{
-            todoName: todo?.name,
-            categoryId: todo?.category.id,
+            todoName: todo?.name || "",
+            categoryId: todo?.category.id || 1,
           }}
         />
       )}
