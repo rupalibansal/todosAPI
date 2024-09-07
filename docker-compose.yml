@@ -13,8 +13,6 @@ services:
       - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
 
   frontend:
-    build:
-      context: ./frontEnd
-      dockerfile: Dockerfile
+    image: ${{ secrets.DOCKER_USERNAME }}/frontend:latest
     ports:
       - "80:80"
