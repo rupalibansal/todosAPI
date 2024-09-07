@@ -13,6 +13,6 @@ services:
       - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
 
   frontend:
-    image: ${{ secrets.DOCKER_USERNAME }}/frontend:latest
+    image: ${DOCKER_USERNAME}/frontend:latest
     ports:
       - "80:80"
