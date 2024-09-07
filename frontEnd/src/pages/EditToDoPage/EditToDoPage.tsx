@@ -19,11 +19,6 @@ export const EditToDoPage = () => {
       .then(() => navigate("/"))
       .catch((e) => console.log(e));
   };
-
-  console.log("todo id", idNumber);
-
-  // write a use effect to get the todo item by id
-
   useEffect(() => {
     getTodoById(Number(id))
       .then((data) => {

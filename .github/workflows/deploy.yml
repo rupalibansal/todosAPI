@@ -1,0 +1,68 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push backend image
+      run: |
+        docker build -t your-dockerhub-username/backend:latest .
+        docker push your-dockerhub-username/backend:latest
+
+    - name: Build and push frontend image
+      run: |
+        docker build -t your-dockerhub-username/frontend:latest ./frontend
+        docker push your-dockerhub-username/frontend:latest
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Transfer Docker Compose file to EC2
+      env:
+        EC2_HOST: ${{ secrets.EC2_HOST }}
+        EC2_USER: ${{ secrets.EC2_USER }}
+        EC2_KEY: ${{ secrets.EC2_KEY }}
+      run: |
+        echo "${EC2_KEY}" > key.pem
+        chmod 400 key.pem
+        scp -o StrictHostKeyChecking=no -i key.pem docker-compose.yml ${EC2_USER}@${EC2_HOST}:/home/${EC2_USER}/
+
+    - name: Deploy on EC2
+      env:
+        EC2_HOST: ${{ secrets.EC2_HOST }}
+        EC2_USER: ${{ secrets.EC2_USER }}
+        EC2_KEY: ${{ secrets.EC2_KEY }}
+        DB_URL: ${{ secrets.DB_URL }}
+        DB_USERNAME: ${{ secrets.DB_USERNAME }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key.pem ${EC2_USER}@${EC2_HOST} << 'EOF'
+          export DB_URL=${DB_URL}
+          export DB_USERNAME=${DB_USERNAME}
+          export DB_PASSWORD=${DB_PASSWORD}
+          docker-compose down
+          docker-compose up -d
+        EOF

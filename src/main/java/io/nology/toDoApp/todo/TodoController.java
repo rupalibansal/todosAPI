@@ -45,6 +45,13 @@ public class TodoController {
         return new ResponseEntity<>(foundTodo, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Todo> findToDoById(@PathVariable long id) throws NotFoundException {
+        Optional<Todo> result = this.todoService.findById(id);
+        Todo foundTodo= result.orElseThrow(() -> new NotFoundException("Could not find todo with id" + id));
+        return new ResponseEntity<>(foundTodo, HttpStatus.OK);
+    }
+
     // GET /todos?category={category}
     @GetMapping
     public ResponseEntity<List<Todo>> findTodosByCategory(

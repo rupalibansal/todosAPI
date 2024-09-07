@@ -97,4 +97,7 @@ public class TodoService {
         return todo.isPresent();
     }
 
+    public Optional<Todo> findById(Long id) {
+        return this.todoRepository.findById(id);
+    }
 }
