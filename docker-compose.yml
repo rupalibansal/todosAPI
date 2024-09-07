@@ -13,4 +13,4 @@ services:
   frontend:
     image: rupalibansal/frontend:latest
     ports:
-      - "80:80"
+      - "80:5173"
