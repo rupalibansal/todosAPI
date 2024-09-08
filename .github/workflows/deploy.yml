@@ -84,6 +84,7 @@ jobs:
             export DB_PASSWORD=${DB_PASSWORD}
             export DOCKER_USERNAME=${DOCKER_USERNAME}
             docker-compose down
+            docker-compose pull
             docker-compose up -d
           EOF
         shell: /usr/bin/bash -e {0}
