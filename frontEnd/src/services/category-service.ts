@@ -1,4 +1,5 @@
-const baseURL = 'http://backend:8080';
+const baseURL =
+  "http://ec2-3-24-134-69.ap-southeast-2.compute.amazonaws.com:8080";
 
 interface todo {
   id: number;
