@@ -22,11 +22,25 @@ export interface ToDoPayload {
 }
 
 const getAllTodos = async () => {
-  const response = await fetch(`${baseURL}/todos`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch");
+  try {
+    const response = await fetch(`${baseURL}/todos`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include", // Include credentials if needed
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch: ${response.statusText}`);
+    }
+
+    return (await response.json()) as TodoItem[];
+  } catch (error) {
+    console.error("Error fetching todos:", error);
+    throw error;
   }
-  return (await response.json()) as TodoItem[];
 };
 
 const createTodo = async (todo: ToDoPayload) => {
