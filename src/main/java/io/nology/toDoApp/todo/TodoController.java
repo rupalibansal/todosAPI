@@ -14,6 +14,7 @@ import io.nology.toDoApp.category.Category;
 import io.nology.toDoApp.common.exceptions.NotFoundException;
 import jakarta.validation.Valid;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("todos")
+@CrossOrigin(origins = "*")
 public class TodoController {
 
     @Autowired
@@ -48,7 +50,7 @@ public class TodoController {
     @GetMapping("/{id}")
     public ResponseEntity<Todo> findToDoById(@PathVariable long id) throws NotFoundException {
         Optional<Todo> result = this.todoService.findById(id);
-        Todo foundTodo= result.orElseThrow(() -> new NotFoundException("Could not find todo with id" + id));
+        Todo foundTodo = result.orElseThrow(() -> new NotFoundException("Could not find todo with id" + id));
         return new ResponseEntity<>(foundTodo, HttpStatus.OK);
     }
 
