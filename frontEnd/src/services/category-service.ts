@@ -1,5 +1,5 @@
 const baseURL =
-  "http://ec2-3-24-134-69.ap-southeast-2.compute.amazonaws.com:8080";
+  "http://ec2-3-24-134-69.ap-southeast-2.compute.amazonaws.com";
 
 interface todo {
   id: number;
