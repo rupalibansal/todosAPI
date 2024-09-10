@@ -32,6 +32,7 @@ RUN find /usr/share/nginx/html -type d -exec chmod 755 {} \; \
 
 # Expose the port the app runs on
 EXPOSE 80
+EXPOSE 443
 
 # Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
