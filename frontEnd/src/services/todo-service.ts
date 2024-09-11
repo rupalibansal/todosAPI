@@ -47,7 +47,9 @@ const createTodo = async (todo: ToDoPayload) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
     },
+    credentials: "include", // Include credentials if needed
     body: JSON.stringify(todo),
   });
   if (!response.ok) {
@@ -61,7 +63,9 @@ const updateTodo = async (id: number, todo: ToDoPayload) => {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
     },
+    credentials: "include", // Include credentials if needed
     body: JSON.stringify(todo),
   });
   if (!response.ok) {
@@ -73,6 +77,11 @@ const updateTodo = async (id: number, todo: ToDoPayload) => {
 const deleteTodo = async (id: number) => {
   const response = await fetch(`${baseURL}/todos/${id}`, {
     method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -82,7 +91,14 @@ const deleteTodo = async (id: number) => {
 };
 
 const getTodoByCategory = async (category: string) => {
-  const response = await fetch(`${baseURL}/todos?category=${category}`);
+  const response = await fetch(`${baseURL}/todos?category=${category}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    credentials: "include",
+  });
   if (!response.ok) {
     throw new Error("Failed to get todos by category");
   }
@@ -90,7 +106,14 @@ const getTodoByCategory = async (category: string) => {
 };
 
 export const getTodoById = async (id: number) => {
-  const response = await fetch(baseURL + "/todos/" + id);
+  const response = await fetch(baseURL + "/todos/" + id, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    credentials: "include",
+  });
 
   if (!response.ok) {
     throw new Error("Failed to fetch");
