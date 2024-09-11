@@ -1,4 +1,4 @@
-const baseURL = "http://ec2-3-24-134-69.ap-southeast-2.compute.amazonaws.com";
+const baseURL = "https://todo.bansalz.com";
 
 export interface TodoItem {
   id: number;
