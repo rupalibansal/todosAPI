@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("todos")
-@CrossOrigin(origins = "*")
 public class TodoController {
 
     @Autowired
