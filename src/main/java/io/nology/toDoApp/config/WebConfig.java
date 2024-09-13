@@ -14,7 +14,9 @@ public class WebConfig implements WebMvcConfigurer {
                 "http://localhost",
                 "https://todo.bansalz.com",
                 "https://todo.bansalz.com/",
-                "http://todo.bansalz.com"
+                "http://todo.bansalz.com",
+                "https://bansalz.com",
+                "https://bansalz.com/",
         };
         registry
                 .addMapping("/**")
