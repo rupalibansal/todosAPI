@@ -32,6 +32,7 @@ public class TodoController {
     // POST /todos
     @PostMapping
     public ResponseEntity<Todo> createToDo(@Valid @RequestBody CreateTodoDTO data) throws Exception {
+        System.out.println("received data to create todo item " + data);
         Todo createdToDo = this.todoService.createToDo(data);
         return new ResponseEntity<Todo>(createdToDo, HttpStatus.CREATED);
 
@@ -71,6 +72,8 @@ public class TodoController {
     // DELETE /todos/:id
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTodoById(@PathVariable Long id) throws NotFoundException {
+        System.out.println("received request to delete todo item for id: " + id);
+
         boolean deleteSuccessful = this.todoService.deleteById(id);
         if (deleteSuccessful == false) {
             throw new NotFoundException("Could not find blog post with id " + id);

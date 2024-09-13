@@ -30,7 +30,10 @@ public class CategoryController {
     // GET /categories
     @GetMapping
     public ResponseEntity<List<Category>> getAllCategories() {
+        System.out.println("received request to get all categories  ");
+
         List<Category> allCategories = this.categoryService.findAll();
+        System.out.println("found categories " + allCategories);
         return new ResponseEntity<List<Category>>(allCategories, HttpStatus.OK);
     }
 
