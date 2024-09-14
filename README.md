@@ -32,3 +32,5 @@ The application is deployed on Amazon AWS EC2 instances with two Docker containe
 - Docker
 - Docker Compose
 - AWS account with EC2 and RDS setup
+
+### 🚀 [Launch Live Project](https:todo.bansalz.com)
