@@ -1,50 +1,34 @@
-# React + TypeScript + Vite
+# ToDo Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This is a ToDo application where users can create, edit, and delete ToDo items and assign them to categories. Users can also create new categories and edit existing ToDo items, including changing the title and category of the item. The application is built with a React front end and a Spring Boot back end, and it uses a MySQL database. The application is deployed on Amazon AWS EC2 instances with Docker containers.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- Create a ToDo item
+- Assign a ToDo item to a category
+- Create a new category
+- Edit the title and category of a ToDo item
+- Delete a ToDo item
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Architecture
 
-- Configure the top-level `parserOptions` property like this:
+- **Front End**: React
+- **Back End**: Spring Boot and Java
+- **Database**: MySQL (AWS RDS)
+- **Deployment**: Amazon AWS EC2 with Docker containers
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Deployment
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+The application is deployed on Amazon AWS EC2 instances with two Docker containers:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- One container for the front end (React)
+- One container for the back end (Spring Boot)
+- The MySQL database is hosted on AWS RDS
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Prerequisites
+
+- Docker
+- Docker Compose
+- AWS account with EC2 and RDS setup
