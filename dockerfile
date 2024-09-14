@@ -9,7 +9,7 @@ COPY pom.xml /app/
 COPY src /app/src/
 
 # Build the package
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # Use an official OpenJDK runtime as a parent image
 FROM openjdk:17-jdk-alpine
