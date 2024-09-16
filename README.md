@@ -25,7 +25,7 @@ The application is deployed on Amazon AWS EC2 instances with two Docker containe
 
 - One container for the front end (React)
 - One container for the back end (Spring Boot)
-- The MySQL database is hosted on AWS RDS
+- The MySQL database is hosted on AWS RDS.
 
 ## Prerequisites
 
