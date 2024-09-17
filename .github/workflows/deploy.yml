@@ -10,6 +10,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    outputs:
+      COMMIT_HASH: ${{ steps.vars.outputs.COMMIT_HASH }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -25,17 +28,17 @@ jobs:
 
       - name: Get Git Commit Hash
         id: vars
-        run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        run: echo "::set-output name=COMMIT_HASH::$(git rev-parse --short HEAD)"
 
       - name: Build and push backend image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/backend:${{ env.COMMIT_HASH }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/backend:${{ env.COMMIT_HASH }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/backend:${{ steps.vars.outputs.COMMIT_HASH }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/backend:${{ steps.vars.outputs.COMMIT_HASH }}
 
       - name: Build and push frontend image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ env.COMMIT_HASH }} ./frontEnd
-          docker push ${{ secrets.DOCKER_USERNAME }}/frontend:${{ env.COMMIT_HASH }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ steps.vars.outputs.COMMIT_HASH }} ./frontEnd
+          docker push ${{ secrets.DOCKER_USERNAME }}/frontend:${{ steps.vars.outputs.COMMIT_HASH }}
 
   deploy:
     needs: build
@@ -51,8 +54,8 @@ jobs:
           echo "export DB_USERNAME=${{ secrets.DB_USERNAME }}" >> env.sh
           echo "export DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> env.sh
           echo "export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> env.sh
-          echo "export COMMIT_HASH=${{ env.COMMIT_HASH }}" >> env.sh
-          echo ${{ env.COMMIT_HASH }}
+          echo "export COMMIT_HASH=${{ needs.build.outputs.COMMIT_HASH }}" >> env.sh
+          echo "COMMIT_HASH=${{ needs.build.outputs.COMMIT_HASH }}"
 
       - name: Transfer Docker Compose file to EC2
         env:
