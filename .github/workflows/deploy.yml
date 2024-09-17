@@ -52,6 +52,7 @@ jobs:
           echo "export DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> env.sh
           echo "export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> env.sh
           echo "export COMMIT_HASH=${{ env.COMMIT_HASH }}" >> env.sh
+          echo ${{ env.COMMIT_HASH }}
 
       - name: Transfer Docker Compose file to EC2
         env:
