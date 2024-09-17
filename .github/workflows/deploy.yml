@@ -45,6 +45,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Create env file
+        run: |
+          echo "DB_URL=${{ secrets.DB_URL }}" > env.sh
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> env.sh
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> env.sh
+          echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> env.sh
+          echo "COMMIT_HASH=${{ env.COMMIT_HASH }}" >> env.sh
+
       - name: Transfer Docker Compose file to EC2
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
@@ -53,20 +61,18 @@ jobs:
         run: |
           echo "${EC2_KEY}" > key.pem
           chmod 400 key.pem
-          scp -o StrictHostKeyChecking=no -i key.pem docker-compose.yml ${EC2_USER}@${EC2_HOST}:/home/${EC2_USER}/
+          scp -o StrictHostKeyChecking=no -i key.pem docker-compose.yml env.sh ${EC2_USER}@${EC2_HOST}:/home/${EC2_USER}/
 
       - name: Deploy on EC2
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           EC2_USER: ${{ secrets.EC2_USER }}
           EC2_KEY: ${{ secrets.EC2_KEY }}
-          DB_URL: ${{ secrets.DB_URL }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          COMMIT_HASH: ${{ env.COMMIT_HASH }}
         run: |
           ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            # Source the environment variables
+            source /home/${EC2_USER}/env.sh
+            
             echo "DOCKER_USERNAME: ${DOCKER_USERNAME}"
             echo "COMMIT_HASH: ${COMMIT_HASH}"
             
