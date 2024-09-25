@@ -12,6 +12,7 @@ export const CreateCategoryPage = () => {
   return (
     <div>
       <h1 style={{ color: "#333" }}>Add a new category</h1>
+      <button onClick={handleOnSubmit}>Create Category</button>
     </div>
   );
 };
