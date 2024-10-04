@@ -1,5 +1,4 @@
-const baseURL = "https://todo.bansalz.com";
-
+import { baseURL } from "../config/config";
 interface todo {
   id: number;
   createdAt: string;
@@ -17,12 +16,16 @@ export interface Category {
   todos: todo[];
 }
 
+export interface CategoryPayload {
+  name: string;
+}
+
 const getAllCategories = async () => {
   const response = await fetch(`${baseURL}/categories`);
   return response.json() as Promise<Category[]>;
 };
 
-const createCategory = async (category: Category) => {
+const createCategory = async (category: CategoryPayload) => {
   const response = await fetch(`${baseURL}/categories`, {
     method: "POST",
     headers: {

@@ -102,10 +102,10 @@ export const ToDoForm = ({ initialValues, onSubmit }: ToDoFormProps) => {
         variant="contained"
         sx={{
           fontSize: "1.2em",
-          backgroundColor: "#4CAF50", // Custom green color
+          backgroundColor: "#e33fe2",
           color: "white",
           "&:hover": {
-            backgroundColor: "#45a049", // Darker green on hover
+            backgroundColor: "#ec76eb",
           },
         }}
       >

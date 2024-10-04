@@ -3,7 +3,7 @@ import "./Footer.css";
 const Footer = () => {
   return (
     <footer className="footer">
-      <p>Made By Rupali Bansal</p>
+      <p>Developed By Rupali Bansal</p>
     </footer>
   );
 };

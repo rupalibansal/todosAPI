@@ -41,7 +41,7 @@
 .highlighted-heading {
     width: 100%;
     text-align: center;
-    background: linear-gradient(to right, #4CAF50 0%, transparent 100%);
+    background: linear-gradient(to right, #9b14d1 22%, transparent 100%);
     padding: 0.5em 0;
     font-weight: bold;
     font-family: 'Pacifico', cursive;
@@ -52,7 +52,7 @@
   .create-todo-button {
     font-size: 1.5em; /* Increase font size */
     padding: 15px 30px; /* Add padding */
-    background-color: #4CAF50; /* Green background */
+    background-color: #e33fe2; /* Green background */
     color: white; /* White text */
     border: none; /* Remove border */
     border-radius: 10px; /* Rounded corners */
@@ -63,5 +63,10 @@
   }
   
   .create-todo-button:hover {
-    background-color: #45a049; /* Darker green on hover */
+    background-color: #ec76eb; /* Darker green on hover */
+  }
+
+  .category-pills {
+    margin-top: 20px; /* Add space between the pills and the buttons */
+    margin-bottom: 20px; /* Add space between the pills and the todo items */
   }

@@ -1,5 +1,4 @@
-const baseURL = "https://todo.bansalz.com";
-
+import { baseURL } from "../config/config";
 export interface TodoItem {
   id: number;
   createdAt: string;
@@ -28,7 +27,6 @@ const getAllTodos = async () => {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      credentials: "include", // Include credentials if needed
     });
 
     if (!response.ok) {
@@ -49,7 +47,6 @@ const createTodo = async (todo: ToDoPayload) => {
       "Content-Type": "application/json",
       Accept: "application/json",
     },
-    credentials: "include", // Include credentials if needed
     body: JSON.stringify(todo),
   });
   if (!response.ok) {
@@ -65,7 +62,6 @@ const updateTodo = async (id: number, todo: ToDoPayload) => {
       "Content-Type": "application/json",
       Accept: "application/json",
     },
-    credentials: "include", // Include credentials if needed
     body: JSON.stringify(todo),
   });
   if (!response.ok) {
@@ -80,7 +76,6 @@ const deleteTodo = async (id: number) => {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
   });
 
   if (!response.ok) {
@@ -96,7 +91,6 @@ const getTodoByCategory = async (category: string) => {
       "Content-Type": "application/json",
       Accept: "application/json",
     },
-    credentials: "include",
   });
   if (!response.ok) {
     throw new Error("Failed to get todos by category");
@@ -111,7 +105,6 @@ export const getTodoById = async (id: number) => {
       "Content-Type": "application/json",
       Accept: "application/json",
     },
-    credentials: "include",
   });
 
   if (!response.ok) {

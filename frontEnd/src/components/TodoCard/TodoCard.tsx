@@ -3,6 +3,7 @@ import { Card, CardContent, Typography, IconButton, Box } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import EditIcon from "@mui/icons-material/Edit";
+import { getCategoryColor } from "../../utils/utils";
 
 interface TodoCardProps {
   todo: { id: number; name: string; category: { id: number; name: string } };
@@ -46,13 +47,20 @@ const TodoCard: React.FC<TodoCardProps> = ({
             </Typography>
           </Box>
           <Box display="flex" alignItems="center">
-            <Typography
-              variant="subtitle2"
-              component="h2"
-              sx={{ marginLeft: 1 }}
+            <Box
+              sx={{
+                backgroundColor: getCategoryColor(todo.category.name),
+                color: "white",
+                padding: "2px 8px",
+                borderRadius: "12px",
+                display: "inline-block",
+                marginLeft: 1,
+              }}
             >
-              {todo.category.name}
-            </Typography>
+              <Typography variant="subtitle2" component="h2">
+                {todo.category.name}
+              </Typography>
+            </Box>
           </Box>
           <Box>
             <IconButton

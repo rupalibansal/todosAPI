@@ -1,5 +1,5 @@
 import { TodoItem } from "../../services/todo-service";
-import { Container, Typography, List } from "@mui/material";
+import { Container, List } from "@mui/material";
 import TodoCard from "../TodoCard/TodoCard";
 import "./Todo.css";
 

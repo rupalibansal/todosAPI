@@ -1,18 +1,25 @@
-import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import TaskForm from "./components/TaskForm/TaskForm";
+import { HomePage } from "./pages/HomePage/HomePage";
+import { CreateToDoPage } from "./pages/CreateToDoPage/CreateToDoPage";
+import Footer from "./components/Footer/Footer";
+import { EditToDoPage } from "./pages/EditToDoPage/EditToDoPage";
 
-const App = () => {
+function App() {
   return (
-    <div className="app">
-      <TaskForm />
-      <main className="app_main">
-        <section className="task_column">Section 1</section>
-        <section className="task_column">Section 2</section>
-        <section className="task_column">Section 3</section>
-      </main>
-    </div>
+    <>
+      <BrowserRouter>
+        <div className="background">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/todo/new" element={<CreateToDoPage />} />
+            <Route path="/todo/edit/:id" element={<EditToDoPage />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+      <Footer />
+    </>
   );
-};
+}
 
 export default App;
